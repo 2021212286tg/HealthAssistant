@@ -135,4 +135,17 @@ INSERT INTO `health_reports` (`user_id`, `report_date`, `total_calories`, `total
 (2, CURDATE(), 205.00, 4.00, 40.00, 3.50, 11.39),
 (3, CURDATE(), 330.00, 30.00, 0.00, 22.00, 13.20);
 
+CREATE TABLE report_history (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    report_title VARCHAR(200) NOT NULL,
+    report_type VARCHAR(50) NOT NULL,
+    start_date DATE,
+    end_date DATE,
+    report_content LONGTEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
+CREATE INDEX idx_report_history_user ON report_history(user_id);
+CREATE INDEX idx_report_history_created ON report_history(created_at DESC);
